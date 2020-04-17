@@ -13,4 +13,31 @@ const system = [
   },
 ]
 
+const regionBases = [
+  {
+    "regionIndex": "0",
+    "regionName": "region1",
+    "regionType": "type1",
+    "resources": [
+      {
+        "category": "test1",
+        "indexCode": "1",
+        "name": "test1"
+      }
+    ]
+  },
+  {
+    "regionIndex": "0",
+    "regionName": "region1",
+    "regionType": "type1",
+    "resources": [
+      {
+        "category": "test1",
+        "indexCode": "1",
+        "name": "test1"
+      }
+    ]
+  },
+]
+
 export {system}
