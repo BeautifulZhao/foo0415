@@ -1,28 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-container>
+      <el-header height="">
+        <!-- Header content -->
+        HELLO WORLD
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <!-- Aside content -->
+          <el-menu>
+            <el-menu-item index="1">
+              <router-link to="system" tag="span">导航一</router-link>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <router-link to="region" tag="span">导航二</router-link>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <router-link to="camera" tag="span">导航三</router-link>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-container>
+          <el-main height="">
+            <!-- Main content -->
+            <!-- main -->
+            <router-view></router-view>
+          </el-main>
+          <el-footer height="">
+            <!-- Footer content -->
+            HELLOWORLD©2020
+          </el-footer>
+        </el-container>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+ .el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    /* text-align: center; */
+    line-height: 64px;
+  }
+
+  .el-aside {
+    height: calc(100vh - 64px)
+  }
 </style>
