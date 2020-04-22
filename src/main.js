@@ -21,7 +21,11 @@ import {
   Input,
   Table,
   TableColumn,
+  Cascader,
+  Transfer,
+  Dialog,
 } from 'element-ui'
+
 
 Vue.use(ElementUI)
 Vue.use(Container)
@@ -40,6 +44,9 @@ Vue.use(FormItem)
 Vue.use(Input)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Cascader)
+Vue.use(Transfer)
+Vue.use(Dialog)
 
 Vue.config.productionTip = false
 

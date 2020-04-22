@@ -1,36 +1,25 @@
 <template>
   <div class="system">
-    <el-form :model="category" ref="form" label-width="80px" :rules="rules">
-      <el-button type="primary" @click="addCategoryItem">add</el-button>
-      <el-button type="primary" @click="save('form')">save</el-button>
-      <el-form-item
-        v-for="(item, index) in category.item" :key="index">
+    <el-form :model="category" ref="form" label-width="80px">
         <el-row :gutter="16">
           <el-col :span="6">
             <el-form-item label="提供方"
-              :prop="'item.' + index+ '.abilityCategory'"
-              :rules="{
-                required: true, message: '必须项', trigger: 'blur'
-              }">
-              <el-input :placeholder="index" v-model="item.abilityCategory"></el-input>
+              prop="abilityCategory"
+              :rules="rule">
+              <el-input v-model="category.abilityCategory"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="访问地址" 
-              :prop="'item.' + index + '.abilityHost'"
-              :rules="{
-                required: true, message: '必选项', trigger: 'blur'
-              }">
-              <el-input placeholder="" v-model="item.abilityHost"></el-input>
+              prop="abilityHost"
+              :rules="rule">
+              <el-input v-model="category.abilityHost"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-button type="primary" v-show="index !== 0"
-              @click="rmCategoryItem(index)"
-            >删除</el-button>
+          <el-col :span="1">
+            <el-button type="primary" @click="save('form')">保存</el-button>
           </el-col>
         </el-row>
-      </el-form-item>
     </el-form>
     <el-table :data="categories" max-height="450">
       <el-table-column label="提供方" prop="abilityCategory"></el-table-column>
@@ -41,56 +30,64 @@
 </template>
 
 <script>
-  import {system} from '../data/data'
+  import axios from '../api/axios'
   export default {
     name: 'System',
     data() {
       return {
-        category: {item:[
-          {
-            'abilityCategory': '',
-            'abilityHost': ''
-          }
-        ]},
-        categories: []
+        category: {
+          abilityCategory: '',
+          abilityHost: '',
+        },
+        categories: [],
+        rule: {
+          required: true,
+          message: '必选项',
+          trigger: 'blur'
+        }
       }
     },
     methods: {
-      addCategoryItem() {
-        if(this.category.item.length < 5)
-          this.category.item.push({'email':'', 'email': ''})
-      },
-      rmCategoryItem(i) {
-        this.category.item.splice(i, 1)
-      },
       save(formName) {
         let _this = this;
         this.$refs[formName].validate((valid) => {
           if(valid) {
             // 请求
-            _this.categories.push(...(_this.category.item.splice(0)))
-            _this.category.item = new Array({
-              'abilityCategory': '',
-              'abilityHost': ''
+            let json = [_this.category]
+            axios({
+              url: 'config/add',
+              method:'post',
+              data: json,
+            }).then(res => {
+              if(res.data.success) {
+                _this.getCategories();
+                _this.category.abilityCategory = '';
+                _this.category.abilityHost = '';
+              }
             })
-          } else {
-            return false;
           }
         })
-       
+      },
+      getCategories() {
+        // 请求
+        axios({
+          url:'config/list/all',
+          method: 'post'
+        }).then(res => {
+          console.log(res)
+          // 列表展示
+          this.categories = res.data.data;
+        })
       }
     },
     created() {
-      // 请求
-      this.categories = system
+      this.getCategories()
     }
   }
 </script>
 
 <style scoped>
-.el-input {
-  width: 270px;
-}
+
 .el-col {
   text-align: center;
 }
