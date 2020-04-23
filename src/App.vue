@@ -3,7 +3,7 @@
     <el-container>
       <el-header height="">
         <!-- Header content -->
-        HELLO WORLD
+        硬件服务配置
       </el-header>
       <el-container>
         <el-aside width="200px">
